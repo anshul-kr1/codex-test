@@ -8,12 +8,33 @@
   initScrollReveal();
   initGalleryModal();
   initParticles();
+  initMotionToggle();
+  initTiltCards();
+  initParallax();
 
   function setCurrentYear() {
     const yearEl = document.getElementById('current-year');
     if (yearEl) {
       yearEl.textContent = String(new Date().getFullYear());
     }
+  }
+
+  function initMotionToggle() {
+    const motionPreference = getMotionPreference();
+    
+    if (motionPreference.matches) {
+      document.documentElement.setAttribute('data-reduced-motion', 'true');
+    }
+
+    const handleMotionChange = (event) => {
+      if (event.matches) {
+        document.documentElement.setAttribute('data-reduced-motion', 'true');
+      } else {
+        document.documentElement.removeAttribute('data-reduced-motion');
+      }
+    };
+
+    attachMotionListener(motionPreference, handleMotionChange);
   }
 
   function initNavigation() {
@@ -67,18 +88,157 @@
     });
   }
 
+  function initTiltCards() {
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    if (!tiltCards.length) {
+      return;
+    }
+
+    const motionPreference = getMotionPreference();
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (motionPreference.matches || isTouchDevice) {
+      return;
+    }
+
+    let animationFrame = null;
+
+    const handleMouseMove = throttle((event) => {
+      if (animationFrame) {
+        return;
+      }
+
+      animationFrame = requestAnimationFrame(() => {
+        tiltCards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          const cardCenterX = rect.left + rect.width / 2;
+          const cardCenterY = rect.top + rect.height / 2;
+          
+          const angleX = (event.clientY - cardCenterY) / rect.height;
+          const angleY = (cardCenterX - event.clientX) / rect.width;
+          
+          const maxTilt = parseFloat(getComputedStyle(document.documentElement)
+            .getPropertyValue('--tilt-max')) || 6;
+          
+          const rotateX = angleX * maxTilt;
+          const rotateY = angleY * maxTilt;
+          
+          const inner = card.querySelector('.tilt-card-inner');
+          if (inner) {
+            inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+          }
+        });
+        
+        animationFrame = null;
+      });
+    }, 16);
+
+    const handleMouseLeave = () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
+      
+      tiltCards.forEach(card => {
+        const inner = card.querySelector('.tilt-card-inner');
+        if (inner) {
+          inner.style.transform = '';
+        }
+      });
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    tiltCards.forEach(card => {
+      card.addEventListener('mouseleave', handleMouseLeave);
+    });
+  }
+
+  function initParallax() {
+    const parallaxElements = document.querySelectorAll('.hero__layer');
+    if (!parallaxElements.length) {
+      return;
+    }
+
+    const motionPreference = getMotionPreference();
+    if (motionPreference.matches) {
+      return;
+    }
+
+    let ticking = false;
+    const smoothing = parseFloat(getComputedStyle(document.documentElement)
+      .getPropertyValue('--parallax-smoothing')) || 0.08;
+
+    const parallaxData = Array.from(parallaxElements).map(el => ({
+      element: el,
+      currentY: 0,
+      targetY: 0,
+      speed: el.classList.contains('hero__layer--one') ? 0.5 :
+              el.classList.contains('hero__layer--two') ? 0.3 : 0.1
+    }));
+
+    function updateParallax() {
+      const scrollY = window.pageYOffset;
+      
+      parallaxData.forEach(data => {
+        data.targetY = scrollY * data.speed;
+      });
+    }
+
+    function animate() {
+      parallaxData.forEach(data => {
+        data.currentY += (data.targetY - data.currentY) * smoothing;
+        data.element.style.transform = `translateY(${data.currentY}px)`;
+      });
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      updateParallax();
+      
+      if (!ticking) {
+        requestAnimationFrame(animate);
+        ticking = true;
+      }
+    }
+
+    updateParallax();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
+
   function initScrollReveal() {
     const revealElements = document.querySelectorAll('[data-reveal]');
-    if (!revealElements.length) {
+    const revealFadeElements = document.querySelectorAll('.reveal-fade:not(.is-visible)');
+    const revealUpElements = document.querySelectorAll('.reveal-up:not(.is-visible)');
+    const revealScaleElements = document.querySelectorAll('.reveal-scale:not(.is-visible)');
+    
+    if (!revealElements.length && !revealFadeElements.length && !revealUpElements.length && !revealScaleElements.length) {
       return;
     }
 
     const motionPreference = getMotionPreference();
 
     if (!('IntersectionObserver' in window) || motionPreference.matches) {
-      revealElements.forEach((element) => element.classList.add('is-visible'));
+      const allRevealElements = [...revealElements, ...revealFadeElements, ...revealUpElements, ...revealScaleElements];
+      allRevealElements.forEach((element) => element.classList.add('is-visible'));
       return;
     }
+
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
 
     const observer = new IntersectionObserver(
       (entries, obs) => {
@@ -89,12 +249,11 @@
           }
         });
       },
-      {
-        threshold: 0.2,
-      }
+      observerOptions
     );
 
-    revealElements.forEach((element) => observer.observe(element));
+    const allElements = [...revealElements, ...revealFadeElements, ...revealUpElements, ...revealScaleElements];
+    allElements.forEach((element) => observer.observe(element));
   }
 
   function initGalleryModal() {
