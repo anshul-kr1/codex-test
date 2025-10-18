@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Hallownest Echoes is a Hollow Knight fan-made tribute site featuring lore highlights, haunting imagery, and progression-inspired abilities."
+    />
+    <title>Hallownest Echoes &mdash; A Hollow Knight Tribute</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="no-js">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="texture-overlay texture-overlay--noise" aria-hidden="true"></div>
+    <div class="texture-overlay texture-overlay--vignette" aria-hidden="true"></div>
+    <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="brand" href="#hero" aria-label="Hallownest Echoes home">
+          <span class="brand__symbol" aria-hidden="true">HK</span>
+          <span class="brand__wordmark">Hallownest Echoes</span>
+        </a>
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-nav"
+        >
+          <span class="menu-toggle__bar" aria-hidden="true"></span>
+          <span class="menu-toggle__bar" aria-hidden="true"></span>
+          <span class="menu-toggle__bar" aria-hidden="true"></span>
+          <span class="sr-only">Toggle navigation</span>
+        </button>
+        <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+          <ul>
+            <li><a href="#hero">Sanctum</a></li>
+            <li><a href="#lore">Lore</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#abilities">Abilities</a></li>
+            <li><a href="#call-to-action">Join the Hunt</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section id="hero" class="hero" data-reveal>
+        <div class="hero__content">
+          <p class="hero__eyebrow">Fan-made tribute to the timeless void</p>
+          <h1>
+            Descend into the Hollow
+            <span class="hero__glow" aria-hidden="true"></span>
+          </h1>
+          <p class="hero__lede">
+            Drift through drifting ash, haunt forgotten caverns, and listen for the
+            whispers of a kingdom that refuses to fade.
+          </p>
+          <div class="hero__actions">
+            <a class="button" href="#gallery">Witness the dreams</a>
+            <a class="button button--ghost" href="#call-to-action">Answer the call</a>
+          </div>
+        </div>
+        <div class="hero__background" aria-hidden="true">
+          <div class="hero__layer hero__layer--one"></div>
+          <div class="hero__layer hero__layer--two"></div>
+          <div class="hero__layer hero__layer--three"></div>
+        </div>
+      </section>
+
+      <section id="lore" class="section section--lore" data-reveal>
+        <div class="section__header">
+          <h2>Echoes of Hallownest</h2>
+          <p>
+            Hollow Knight weaves a tale of sacrifice and sleep. These fragments of lore
+            set the tone for your descent.
+          </p>
+        </div>
+        <div class="lore-grid">
+          <article class="lore-card">
+            <h3>Sleepers at the Gate</h3>
+            <p>
+              The guardians dream eternal, holding back the plague that gnaws at the heart
+              of Hallownest. Their devotion hums through the ruins.
+            </p>
+            <blockquote>
+              <p>
+                &ldquo;<span>We are the vessel. We contain the infection.</span> Our will is cold
+                and pure.&rdquo;
+              </p>
+              <cite>&mdash; Seal of the Dreamers</cite>
+            </blockquote>
+          </article>
+          <article class="lore-card">
+            <h3>The Nailsmith's Lament</h3>
+            <p>
+              Forged in fire, tempered in regret. The Nailsmith's craft shaped countless
+              fates, each blade an echo of his ambition.
+            </p>
+            <blockquote>
+              <p>
+                &ldquo;<span>I have honed an instrument of death.</span> A masterpiece that haunts
+                me still.&rdquo;
+              </p>
+              <cite>&mdash; The Nailsmith</cite>
+            </blockquote>
+          </article>
+          <article class="lore-card">
+            <h3>Kingdom of Moths</h3>
+            <p>
+              Once radiant, now hushed. The Moth Tribe tend the light of dreams, guiding lost
+              spirits through the blackened halls of Hallownest.
+            </p>
+            <blockquote>
+              <p>
+                &ldquo;<span>In dreams we bear witness.</span> In waking we endure the stillness.&rdquo;
+              </p>
+              <cite>&mdash; Seer of the Resting Grounds</cite>
+            </blockquote>
+          </article>
+        </div>
+      </section>
+
+      <section id="gallery" class="section section--gallery" data-reveal>
+        <div class="section__header">
+          <h2>Gallery of Adversaries</h2>
+          <p>
+            A glimpse into haunted arenas and the foes that dwell within. Each encounter is
+            a dance between grace and ruin.
+          </p>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-item">
+            <img
+              src="assets/gallery/hallownest-atmosphere-1.jpg"
+              alt="A cavernous arena lit by eerie blue motifs and drifting mist"
+              loading="lazy"
+            />
+            <figcaption>
+              <h3>Watcher&rsquo;s Spire</h3>
+              <p>Gaze beyond the glass and glimpse the city&rsquo;s sleeping watch.</p>
+            </figcaption>
+            <button
+              type="button"
+              class="gallery-item__trigger"
+              data-gallery-trigger
+              data-title="Watcher&rsquo;s Spire"
+              data-description="Deep within the City of Tears, glass cathedrals resonate with the hum of ancient sentries."
+              data-image="assets/gallery/hallownest-atmosphere-1.jpg"
+              data-alt="High towers with stained glass arches glowing in azure light"
+            >
+              View detail
+            </button>
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="assets/gallery/hallownest-atmosphere-2.jpg"
+              alt="Misty cavern with raining motes of light and serrated arches"
+              loading="lazy"
+            />
+            <figcaption>
+              <h3>The Abyssal Choir</h3>
+              <p>Murmurs drift upward from broken shells and fathomless seas.</p>
+            </figcaption>
+            <button
+              type="button"
+              class="gallery-item__trigger"
+              data-gallery-trigger
+              data-title="The Abyssal Choir"
+              data-description="Fragments of forgotten kin echo beneath the lighthouse, harmonising with the crashing dark."
+              data-image="assets/gallery/hallownest-atmosphere-2.jpg"
+              data-alt="Shadowed tendrils silhouetted against a deep blue glow"
+            >
+              View detail
+            </button>
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="assets/gallery/hallownest-atmosphere-3.jpg"
+              alt="Overgrown ruins lined with pale luminescent filaments"
+              loading="lazy"
+            />
+            <figcaption>
+              <h3>Queen&rsquo;s Gardens</h3>
+              <p>Thorns entwine forgotten halls, sheltering the last whispers of royalty.</p>
+            </figcaption>
+            <button
+              type="button"
+              class="gallery-item__trigger"
+              data-gallery-trigger
+              data-title="Queen&rsquo;s Gardens"
+              data-description="Where green path meets decay, graceful guardians test the resolve of every intruder."
+              data-image="assets/gallery/hallownest-atmosphere-3.jpg"
+              data-alt="Glowing vines curling through archways with pale light"
+            >
+              View detail
+            </button>
+          </figure>
+          <figure class="gallery-item">
+            <img
+              src="assets/gallery/hallownest-atmosphere-4.jpg"
+              alt="A dark sanctum streaked with pale luminance and silver sigils"
+              loading="lazy"
+            />
+            <figcaption>
+              <h3>Sanctum of the Hollow</h3>
+              <p>Silent bells toll for the vessel&rsquo;s return, echoing through the void.</p>
+            </figcaption>
+            <button
+              type="button"
+              class="gallery-item__trigger"
+              data-gallery-trigger
+              data-title="Sanctum of the Hollow"
+              data-description="A chamber crafted in reverence, waiting for the one who carries the void."
+              data-image="assets/gallery/hallownest-atmosphere-4.jpg"
+              data-alt="Concentric rings of light surrounding an obsidian altar"
+            >
+              View detail
+            </button>
+          </figure>
+        </div>
+      </section>
+
+      <section id="abilities" class="section section--abilities" data-reveal>
+        <div class="section__header">
+          <h2>Abilities of the Vessel</h2>
+          <p>
+            Channel the Void and adapt to every trial with these iconic powers. Each
+            ability hints at the growth of the wanderer.
+          </p>
+        </div>
+        <div class="abilities-grid">
+          <article class="ability-card">
+            <img src="assets/silhouettes/mask.svg" alt="Stylised Hollow Knight mask" />
+            <div>
+              <h3>Shade Cloak</h3>
+              <p>
+                Fold into the abyss to slip through burning barriers and evade merciless
+                strikes.
+              </p>
+            </div>
+          </article>
+          <article class="ability-card">
+            <img src="assets/silhouettes/mothwing.svg" alt="Flowing mothwing silhouette" />
+            <div>
+              <h3>Mothwing Cloak</h3>
+              <p>
+                Leap across chasms with a dash born of lumafly wings, weaving between enemy
+                blows.
+              </p>
+            </div>
+          </article>
+          <article class="ability-card">
+            <img src="assets/silhouettes/nail.svg" alt="Nail weapon silhouette" />
+            <div>
+              <h3>Pale Nail</h3>
+              <p>
+                The Nailsmith&rsquo;s finest creation, honed to carve through the toughest shells
+                with ease.
+              </p>
+            </div>
+          </article>
+          <article class="ability-card">
+            <img src="assets/silhouettes/charm.svg" alt="Charm silhouette" />
+            <div>
+              <h3>Dream Wielder</h3>
+              <p>
+                Channel the essence of dreams to gather soul swiftly and strike with ethereal
+                might.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="call-to-action" class="section section--cta" data-reveal>
+        <div class="cta-card">
+          <h2>Answer the Call of Hallownest</h2>
+          <p>
+            Visit the official Hollow Knight site to support Team Cherry, or descend into
+            your own journey through Hallownest by securing a copy today.
+          </p>
+          <div class="cta-actions">
+            <a
+              class="button"
+              href="https://www.hollowknight.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Official Site
+            </a>
+            <a
+              class="button button--ghost"
+              href="https://store.steampowered.com/app/367520/Hollow_Knight/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Steam Store Page
+            </a>
+          </div>
+          <p class="cta-disclaimer">
+            Hallownest Echoes is a fan-made tribute project. All lore and inspiration belong
+            to Team Cherry. No original game assets are used.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" data-reveal>
+      <div class="site-footer__inner">
+        <div>
+          <h2 class="sr-only">Site footer</h2>
+          <p>&copy; <span id="current-year"></span> Hallownest Echoes &middot; Crafted by fans.</p>
+          <p class="site-footer__license">
+            Textures and silhouettes are custom-made and released under CC0. Hollow Knight is
+            a trademark of Team Cherry.
+          </p>
+        </div>
+        <div class="site-footer__links">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://mastodon.social" target="_blank" rel="noopener noreferrer">Mastodon</a>
+          <a href="mailto:tribute@example.com">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="gallery-modal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="modal-title"
+      hidden
+    >
+      <div class="modal__overlay" data-modal-overlay></div>
+      <div class="modal__content" role="document">
+        <button type="button" class="modal__close" data-modal-close>
+          <span class="sr-only">Close gallery detail</span>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <figure class="modal__figure">
+          <img class="modal__image" src="" alt="" />
+          <figcaption>
+            <h3 id="modal-title" class="modal__title"></h3>
+            <p class="modal__description"></p>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
